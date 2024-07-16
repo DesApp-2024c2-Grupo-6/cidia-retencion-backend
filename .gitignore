@@ -63,3 +63,6 @@ typings/
 
 # Docker
 docker/postgres/data
+
+# VISUAL STUDIO
+.vs
