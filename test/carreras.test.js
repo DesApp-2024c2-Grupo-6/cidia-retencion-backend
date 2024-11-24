@@ -1,44 +1,44 @@
-// import axios from 'axios';
-// import MockAdapter from 'axios-mock-adapter';
+// const { crearCarrera } = require('../lib/controllers/carreras.controller');
 
-// const mock = new MockAdapter(axios);
+// //Implementamos el mock del modulo de mongoose
 
-// test('Get todas las carreras', async () => {
-//   mock.onGet('/api/carreras/').reply(200, {
-//     data: [
-//       {
+// //Mockeamos el archivo que define materiasSchema
+// jest.mock('../lib/models/carreras.schema', () => ({
+//   CareerDataSchema: {},
+// }));
+
+// //Mockeamos el objeto response
+// class MockResponse {
+//   send(_data) {
+//     this.data = _data;
+//     return this;
+//   }
+//   json(_data) {
+//     this.data = _data;
+//     return this;
+//   }
+//   status(n) {
+//     this.theStatus = n;
+//     return this;
+//   }
+// }
+
+// //Test de creacion de materia
+// describe('Carreras controller', () => {
+//   test('crearCarrera', async () => {
+//     //Mockeamos el objeto request
+//     const mockReq = {
+//       body: {
 //         careerId: 1,
-//         unahurSubjects: { year: 1, campo: 'Test' },
-//         englishLevels: { year: 1, campo: 'Test' },
+//         unahurSubjects: [],
+//         englishLevels: [],
 //         suggestionThresholdRegularizedSubjects: 1,
-//         careerName: 'Test de carrera',
 //         specialCareerName: 'Test',
 //         minimumSubjectsRecommended: 1,
 //       },
-//     ],
+//     };
+//     const mockRes = new MockResponse();
+//     await crearCarrera(mockReq, mockRes);
+//     expect(mockRes.theStatus).toEqual(200);
 //   });
-
-//   const response = await axios.get('/api/carreras/');
-
-//   expect(response.data).toEqual({ data: [] });
-// });
-
-// test('Get una carrera por ID', async () => {
-//   mock.onGet('/api/carreras/', { params: { careerId: '1' } }).reply(200, {
-//     data: {
-//       careerId: 1,
-//       unahurSubjects: { year: 1, campo: 'Test' },
-//       englishLevels: { year: 1, campo: 'Test' },
-//       suggestionThresholdRegularizedSubjects: 1,
-//       careerName: 'Test de carrera',
-//       specialCareerName: 'Test',
-//       minimumSubjectsRecommended: 1,
-//     },
-//   });
-
-//   const response = await axios.get('/api/carreras/', {
-//     params: { careerId: '1' },
-//   });
-
-//   expect(response.data).toEqual({ data: [] });
 // });
