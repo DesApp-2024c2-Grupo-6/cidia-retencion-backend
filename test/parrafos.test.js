@@ -1,5 +1,8 @@
 const { createParrafo } = require('../lib/controllers/parrafo.controller');
 
+// Para testear error se guarda el estado de la ejecucion
+let mockSaveExecution;
+
 //Implementamos el mock del modulo de mongoose
 
 jest.mock('mongoose', () => ({
@@ -15,7 +18,9 @@ jest.mock('mongoose', () => ({
               condition: [],
             },
           ],
-          save: async () => {},
+          save: async () => {
+            mockSaveExecution(); //Se guarda el estado de la implementacion de modo que el test pasado ya halla agregado el parrafo
+          },
         }),
       };
     },
@@ -45,6 +50,10 @@ class MockResponse {
 
 //Test de creacion de parrafo
 describe('parrafo controler', () => {
+  beforeEach(() => {
+    mockSaveExecution = () => {};
+  });
+
   test('createParrafo', async () => {
     //Mockeamos el objeto request
     const mockReq = {
@@ -55,5 +64,18 @@ describe('parrafo controler', () => {
     expect(mockRes.theStatus).toEqual(200);
     expect(mockRes.data.message).toEqual('Párrafo agregado correctamente');
     expect(mockRes.data.parrafo._rawData).toHaveLength(2);
+  });
+
+  test('createParrafo - error', async () => {
+    mockSaveExecution = () => {
+      throw new Error('mock de error al hacer el save');
+    };
+    const mockReq = {
+      body: { parrafoId: 1, nuevaClave: 'parrafo2', nuevoTexto: 'lineaX' },
+    };
+    const mockRes = new MockResponse();
+    await createParrafo(mockReq, mockRes);
+    expect(mockRes.theStatus).toEqual(500);
+    expect(mockRes.data.message).toEqual('Error al agregar el párrafo');
   });
 });
