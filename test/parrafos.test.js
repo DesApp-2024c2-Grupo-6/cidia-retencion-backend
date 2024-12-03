@@ -1,4 +1,7 @@
-const { createParrafo } = require('../lib/controllers/parrafo.controller');
+const {
+  createParrafo,
+  deleteOneParrafo,
+} = require('../lib/controllers/parrafo.controller');
 
 // Para testear error se guarda el estado de la ejecucion
 let mockSaveExecution;
@@ -19,8 +22,17 @@ jest.mock('mongoose', () => ({
             },
           ],
           save: async () => {
-            mockSaveExecution(); //Se guarda el estado de la implementacion de modo que el test pasado ya halla agregado el parrafo
+            //Se guarda el estado de la implementacion de modo que el test pasado ya halla agregado el parrafo
+            mockSaveExecution();
           },
+        }),
+        //Devuelve objeto con atributo modifiedCount = 1 para significar que se borro un objeto
+        updateOne: (_key) => ({
+          result: [
+            {
+              modifiedCount: 1,
+            },
+          ],
         }),
       };
     },
@@ -77,5 +89,13 @@ describe('parrafo controler', () => {
     await createParrafo(mockReq, mockRes);
     expect(mockRes.theStatus).toEqual(500);
     expect(mockRes.data.message).toEqual('Error al agregar el párrafo');
+  });
+
+  test('deleteOneParrafo', async () => {
+    const mockReq = { body: { key: 1 } }; //Req solo con ID del parrafo
+    const mockRes = new MockResponse();
+    await deleteOneParrafo(mockReq, mockRes);
+    expect(mockRes.theStatus).toEqual(200);
+    expect(mockRes.data.message).toEqual('Elemento eliminado con éxito.');
   });
 });
