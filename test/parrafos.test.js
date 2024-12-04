@@ -30,7 +30,7 @@ jest.mock('mongoose', () => ({
         updateOne: (_key) => ({
           result: [
             {
-              modifiedCount: 1,
+              modifiedCount: 0,
             },
           ],
         }),
@@ -82,6 +82,7 @@ describe('parrafo controler', () => {
     mockSaveExecution = () => {
       throw new Error('mock de error al hacer el save');
     };
+
     const mockReq = {
       body: { parrafoId: 1, nuevaClave: 'parrafo2', nuevoTexto: 'lineaX' },
     };
@@ -98,4 +99,16 @@ describe('parrafo controler', () => {
     expect(mockRes.theStatus).toEqual(200);
     expect(mockRes.data.message).toEqual('Elemento eliminado con éxito.');
   });
+
+  // test('deleteOneParrafo - error 404', async () => {
+  //   mockSaveExecution = () => {
+  //     throw new Error('mock de error al borrar parrafo');
+  //   };
+
+  //   const mockReq = { body: { key: 0 } };
+  //   const mockRes = new MockResponse();
+  //   await deleteOneParrafo(mockReq, mockRes);
+  //   expect(mockRes.theStatus).toEqual(404);
+  //   expect(mockRes.data.message).toEqual('No se encontró ningún elemento con la clave proporcionada.');
+  // });
 });
