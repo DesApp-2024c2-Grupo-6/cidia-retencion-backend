@@ -57,6 +57,7 @@ typings/
 
 # dotenv environment variables file
 .env
+.env.*
 
 # next.js build output
 .next
@@ -66,3 +67,6 @@ docker/postgres/data
 
 # VISUAL STUDIO
 .vs
+
+# Mongo DB
+lib/mongoDB.js
