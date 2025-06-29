@@ -67,6 +67,3 @@ docker/postgres/data
 
 # VISUAL STUDIO
 .vs
-
-# Mongo DB
-lib/mongoDB.js
